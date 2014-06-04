@@ -1,0 +1,4 @@
+name: browsmos_dart
+description: Browsmos JS converted to Dart.
+dependencies:
+  browser: any
