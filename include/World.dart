@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'Cell.dart';
 
 class World {
 
@@ -62,15 +63,102 @@ class World {
         'bounce': ['fx/bounce.ogg'],
       }
     );*/
+    
+    // Event registration
+    this.canvas.onMouseDown.listen((event) => this.mouse_down(event));
+    this.canvas.onTouchStart.listen((event) => this.touch_start(event));
+    document.onMouseWheel.listen((event) => this.mouse_scroll(event));
+    window.onKeyDown.listen((event) => this.key_down(event));
+    window.onBlur.listen((event) => this.pause(forcepause: true));
+    
+    //querySelector("#mute").onClick.listen((event) => this.music.mute());
+    querySelector("#newlevel").onClick.listen((event) => this.load_level());
+    querySelector("#pause").onClick.listen((event) => this.pause());
+    querySelector("#help").onClick.listen((event) => this.toggle_help());
+    querySelector("#pausedmessage").onClick.listen((event) => this.pause());
+    querySelector("#deathmessage").onClick.listen((event) => this.load_level());
+    querySelector("#warningmessage").onClick.listen((event) => this.load_level());
+    querySelector("#successmessage").onClick.listen((event) => this.load_level());
+    
+    querySelector("#playbutton").onClick.listen((event) {
+      this.toggle_help();
+      // Play a sound in order to allow any sound playback at all on iOS
+     //this.music.play_sound("win");
+    });
+          
+    //this.music.init();
   }
   
+  toggle_help() {
+    
+  }
+  
+  pause({bool forcepause: false}) {
+    window.console.log("pause()");
+  }
+  
+  zoom_to_player() {
+    
+  }
   
   load_level() {
+    window.console.log("load_level()");
+  }
+  
+  get_player() {
+    
+  }
+  
+  push_player_from(int x, int y) {
+    
+  }
+  
+  click_at_point(int x, int y) {
+    
+  }
+  
+  touch_start(Event e) {
+    
+  }
+  
+  mouse_down(Event e) {
+    window.console.log("Mouse Down");
+  }
+  
+  mouse_scroll(Event e) {
+    
+  }
+  
+  key_down(Event e) {
+    
+  }
+  
+  transfer_mass(Cell cell1, Cell cell2) {
+    
+  }
+  
+  clear_msgs(bool forceclear) {
+    
+  }
+  
+  show_message(String id) {
+    
+  }
+  
+  player_did_die() {
+    
+  }
+  
+  player_did_win() {
     
   }
   
   update() {
     window.animationFrame.then((value) => this.update());
+  }
+  
+  angleForVector(int x, int y) {
+    
   }
   
 }
