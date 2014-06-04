@@ -3,61 +3,11 @@
 	<head>
 		<title>Browsmos</title>
 		<link rel="author" href="https://plus.google.com/105903021303554703114/">
-		<script src="js/Mover.js"></script>
-		<script src="js/Cell.js"></script>
-		<script src="js/World.js"></script>
-		<script src="js/Camera.js"></script>
-		<script src="js/MusicPlayer.js"></script>
-		<script>
-			// Engine globals
-			var fps = 30;
-			var mspf = 1000 / fps;
-			var updateInterval;
-			var center;
-			var viewport_radius;
-			
-			// Game globals
-			var world;
-			
-			// Setup function called when page loads
-			function main() {
-				var canvas = document.getElementById('canvas');
-				if (canvas.getContext) {
-					// Canvas Setup
-					canvas.height = window.innerHeight;
-					canvas.width = window.innerWidth;
-					center = [canvas.width/2, canvas.height/2];
-					
-					// Initialize the World
-					world = new World(canvas);
-					world.load_level();
-					
-					// Create requestAnimFrame if it doesn't exist
-					window.requestAnimFrame = (function(){
-						return  window.requestAnimationFrame   || 
-							window.webkitRequestAnimationFrame || 
-							window.mozRequestAnimationFrame    || 
-							window.oRequestAnimationFrame      || 
-							window.msRequestAnimationFrame     || 
-							function(/* function */ callback, /* DOMElement */ element){
-								window.setTimeout(callback, mspf);
-							};
-					})();
-					
-					// Animate!
-					(function animloop(){
-						world.update();
-						requestAnimFrame(animloop, canvas);
-					})();
-					// updateInterval = window.setInterval("world.update()", mspf);
-				}
-			}
-		</script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link id="favicon" rel="icon" type="image/png" href="img/icon_16.png" />
 		<meta name="viewport" content="width=450, user-scalable=no">
 	</head>
-	<body onload="main();">
+	<body>
 		<img id="logo" src="img/logo.png" alt="Browsmos" />
 		<canvas id="canvas">Sorry, no canvas for you!</canvas>
 		<ul id="controls">
