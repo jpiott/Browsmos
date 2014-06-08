@@ -51,10 +51,10 @@ class Camera {
     
     // Gently move to target
     if (this.scale != this.scale_target)
-      this.scale = this.scale.abs() + (frame_delta * (this.scale_target - this.scale) * this.scale_smoothness).abs();
+      this.scale = this.scale + ((this.scale_target - this.scale) * this.scale_smoothness);
     if (this.x != this.x_target)
-      this.x += (frame_delta * (this.x_target - this.x) * this.move_smoothness).toInt();
+      this.x += ((this.x_target - this.x) * this.move_smoothness).toInt();
     if (this.y != this.y_target)
-      this.y += (frame_delta * (this.y_target - this.y) * this.move_smoothness).toInt();
+      this.y += ((this.y_target - this.y) * this.move_smoothness).toInt();
   }
 }

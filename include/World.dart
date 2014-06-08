@@ -329,7 +329,7 @@ class World {
     double overlap = (cell1.radius + cell2.radius - cell1.distance_from(cell2)) / (2 * smaller.radius);
     if (overlap > 1) overlap = 1.0;
     overlap *= overlap;
-    double mass_exchange = overlap * smaller.area() * this.frame_delta;
+    double mass_exchange = overlap * smaller.area();
     
     smaller.radius -= mass_exchange / (2*PI*smaller.radius);
     bigger.radius += mass_exchange / (2*PI*bigger.radius);

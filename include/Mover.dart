@@ -62,8 +62,8 @@ class Mover {
       this.y_veloc = yvelsign * this.y_veloc_max;
    
     // Adjust the position, according to velocity.
-    this.x_pos += (this.x_veloc * frame_delta).toInt();
-    this.y_pos += (this.y_veloc * frame_delta).toInt();
+    this.x_pos += (this.x_veloc).toInt();
+    this.y_pos += (this.y_veloc).toInt();
     
     // Friction
     this.x_veloc *= this.friction;
