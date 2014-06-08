@@ -2,6 +2,6 @@
 
 ## About
 
-This project is a DART conversion of the original Browsmos by Stephen Eisenhauer, linked below.
+This project is a DART conversion of the original Browsmos, linked below.
 
 https://github.com/BHSPitMonkey/Browsmos
