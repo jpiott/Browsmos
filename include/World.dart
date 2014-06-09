@@ -153,7 +153,7 @@ class World {
     this.level_radius = 500.0;
     
     // Define the player first
-    this.cells.add(new Cell(0, 0, 10.0));
+    this.cells.add(new Cell(0.0, 0.0, 10.0));
     
     // Generate a bunch of random cells
     Random randomGen = new Random();
@@ -171,7 +171,7 @@ class World {
       r = randomGen.nextDouble() * (this.level_radius - 20 - rad - rad);
       x = (30 + rad + r) * sin(ang);
       y = (30 + rad + r) * cos(ang);
-      cell = new Cell(x.toInt(), y.toInt(), rad);
+      cell = new Cell(x, y, rad);
       cell.x_veloc = (randomGen.nextDouble() - .5) * .35;
       cell.y_veloc = (randomGen.nextDouble() - .5) * .35;
       this.cells.add(cell);
@@ -203,13 +203,13 @@ class World {
   push_player_from(int x, int y) {
     Cell player = this.get_player();
     if (player != null && !player.dead) {
-      int dx = player.x_pos - x;
-      int dy = player.y_pos - y;
+      double dx = (player.x_pos - x).toDouble();
+      double dy = (player.y_pos - y).toDouble();
 
       // Normalize dx/dy
       double mag = sqrt(pow(dx, 2) + pow(dy, 2));
-      dx ~/= mag.toInt();
-      dy ~/= mag.toInt();
+      dx = (dx / mag);
+      dy = (dy / mag);
       
       // Reduce force in proportion to area
       double area = player.area();
@@ -226,8 +226,8 @@ class World {
       
       // Shoot off the expended mass in opposite direction
       double newrad = sqrt((area/20)/PI);
-      int newx = player.x_pos - (dx * (player.radius + newrad + 1)).toInt(); // The +1 is for cushioning!
-      int newy = player.y_pos - (dy * (player.radius + newrad + 1)).toInt();
+      double newx = player.x_pos - (dx * (player.radius + newrad + 1)); // The +1 is for cushioning!
+      double newy = player.y_pos - (dy * (player.radius + newrad + 1));
       Cell newcell = new Cell(newx, newy, newrad);
       newcell.x_veloc = -fx * 9;
       newcell.y_veloc = -fy * 9;
@@ -380,7 +380,7 @@ class World {
     
     // Cute animation thing
     Cell player = this.get_player();
-    player.x_pos = player.y_pos = 0;
+    player.x_pos = player.y_pos = 0.0;
     if (this.cam.scale_target > 0.538)
       this.cam.scale_target = 0.538;
     for (int i=1; i<this.cells.length; i++) {
@@ -454,7 +454,7 @@ class World {
     for (int i=0; i<this.cells.length; i++) {
       if (!this.cells[i].dead) {
         if (!this.paused) {
-          for (var j=0; j<this.cells.length; j++) {
+          for (int j=0; j<this.cells.length; j++) {
             if ((i != j) && (!this.cells[j].dead)) {
               if (this.cells[i].collides_with(this.cells[j])) {
                 this.transfer_mass(this.cells[i], this.cells[j]);
@@ -473,8 +473,8 @@ class World {
             total_usable_mass += curr_area;
         
           // If cell is outside of level bounds, fix it
-          int cell_x = this.cells[i].x_pos;
-          int cell_y = this.cells[i].y_pos;
+          double cell_x = this.cells[i].x_pos;
+          double cell_y = this.cells[i].y_pos;
           double cellrad = this.cells[i].radius;
           double dist_from_origin = sqrt(pow(cell_x, 2) + pow(cell_y, 2));
           if (dist_from_origin + cellrad > this.level_radius) {
@@ -483,8 +483,8 @@ class World {
             double cell_yvel = this.cells[i].y_veloc;
             
             // Move cell safely inside bounds
-            this.cells[i].x_pos = (this.cells[i].x_pos * ((this.level_radius-cellrad-1) / dist_from_origin)).toInt();
-            this.cells[i].y_pos = (this.cells[i].y_pos * ((this.level_radius-cellrad-1) / dist_from_origin)).toInt();
+            this.cells[i].x_pos = (this.cells[i].x_pos * ((this.level_radius-cellrad-1) / dist_from_origin));
+            this.cells[i].y_pos = (this.cells[i].y_pos * ((this.level_radius-cellrad-1) / dist_from_origin));
             cell_x = this.cells[i].x_pos;
             cell_y = this.cells[i].y_pos;
             dist_from_origin = sqrt(pow(cell_x, 2) + pow(cell_y, 2));
@@ -492,15 +492,15 @@ class World {
             // Bounce!
 
             // Find speed
-            var cell_speed = sqrt(pow(cell_xvel, 2) + pow(cell_yvel, 2) );
+            double cell_speed = sqrt(pow(cell_xvel, 2) + pow(cell_yvel, 2) );
             // Find angles of "center to cell" and cell's velocity
-            var angle_from_origin = angleForVector(cell_x.toDouble(), cell_y.toDouble());
-            var veloc_ang = angleForVector(cell_xvel, cell_yvel);
+            double angle_from_origin = angleForVector(cell_x.toDouble(), cell_y.toDouble());
+            double veloc_ang = angleForVector(cell_xvel, cell_yvel);
             // Get new velocity angle
-            var new_veloc_ang = PI + angle_from_origin + (angle_from_origin - veloc_ang);
+            double new_veloc_ang = PI + angle_from_origin + (angle_from_origin - veloc_ang);
             // Normalize the vector from the origin to the cell's new position
-            var center_to_cell_norm_x = -cell_x * (1 / dist_from_origin);
-            var center_to_cell_norm_y = -cell_y * (1 / dist_from_origin);
+            double center_to_cell_norm_x = -cell_x * (1 / dist_from_origin);
+            double center_to_cell_norm_y = -cell_y * (1 / dist_from_origin);
             // Set new velocity components
             this.cells[i].x_veloc = cell_speed * cos(new_veloc_ang);
             this.cells[i].y_veloc = cell_speed * sin(new_veloc_ang);
@@ -535,7 +535,7 @@ class World {
     player.draw(this.ctx, this.cam, this.shadows);
     
     // Camera-track player
-    this.cam.update(player.x_pos, player.y_pos, this.frame_delta);
+    this.cam.update(player.x_pos.toInt(), player.y_pos.toInt(), this.frame_delta);
     
     // Update music player
     //this.music.update();

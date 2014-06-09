@@ -10,11 +10,11 @@ class Cell extends Mover {
   //double y_veloc;
   //double radius;
   bool dead = false;
-  int default_x;
-  int default_y;
+  double default_x;
+  double default_y;
   String fillStyle = "#73DBFF";
 
-  Cell(int xpos, int ypos, double radius) {
+  Cell(double xpos, double ypos, double radius) {
     this.radius = radius;
     this.x_pos = xpos;
     this.y_pos = ypos;
@@ -41,7 +41,7 @@ class Cell extends Mover {
       if (shadow) {
         ctx.fillStyle = "rgba(0,0,0,0.3)";  // gray
         ctx.beginPath();
-        ctx.arc(cam.world_to_viewport_x(this.x_pos)+1, cam.world_to_viewport_y(this.y_pos)+3, this.radius*cam.scale, 0, PI*2, true);
+        ctx.arc(cam.world_to_viewport_x(this.x_pos.toInt())+1, cam.world_to_viewport_y(this.y_pos.toInt())+3, this.radius*cam.scale, 0, PI*2, true);
         ctx.closePath();
         ctx.fill();
       }
@@ -58,7 +58,7 @@ class Cell extends Mover {
         ctx.fillStyle = this.fillStyle;
 
       ctx.beginPath();
-      ctx.arc(cam.world_to_viewport_x(this.x_pos), cam.world_to_viewport_y(this.y_pos), this.radius*cam.scale, 0, PI*2, true);
+      ctx.arc(cam.world_to_viewport_x(this.x_pos.toInt()), cam.world_to_viewport_y(this.y_pos.toInt()), this.radius*cam.scale, 0, PI*2, true);
       ctx.closePath();
       ctx.fill();
     }

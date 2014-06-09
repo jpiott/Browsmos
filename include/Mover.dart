@@ -10,8 +10,8 @@ class Mover {
   double radius = 20.0;
 
   // Variables to hold current position
-  int x_pos = 0;
-  int y_pos = 0;
+  double x_pos = 0.0;
+  double y_pos = 0.0;
 
   // Variables to hold current velocity
   double x_veloc = 0.0;
@@ -39,8 +39,8 @@ class Mover {
   }
   
   distance_from(Mover other) {
-    int dx = this.x_pos - other.x_pos;
-    int dy = this.y_pos - other.y_pos;
+    double dx = this.x_pos - other.x_pos;
+    double dy = this.y_pos - other.y_pos;
     return sqrt(pow(dx, 2) + pow(dy, 2));
   }
   
@@ -49,7 +49,7 @@ class Mover {
   }
   
   set_position(int x, int y) { 
-    this.x_pos = x; this.y_pos = y; 
+    this.x_pos = x.toDouble(); this.y_pos = y.toDouble(); 
   }
   
   update_mover(int frame_delta) {
